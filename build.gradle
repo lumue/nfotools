@@ -1,0 +1,38 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath group: 'com.layer', name: 'gradle-git-repo-plugin', version: '2.0.2'
+	}
+}
+apply plugin: 'java'
+
+//java configuration
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+
+//project properties
+version = '0.1-SNAPSHOT'
+group = 'io.github.lumue'
+
+//dependenciesS
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+
+}
+
+
+apply plugin: 'maven'
+
+
+uploadArchives {
+	repositories.mavenDeployer {
+		repository(url: "file:/home/lm/git/maven-repository/")
+	}
+}
