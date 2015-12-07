@@ -4,7 +4,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,7 +14,7 @@ import java.util.List;
  */
 @XmlRootElement(name = "movie")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Movie {
+public class Movie implements Serializable{
 
     @XmlElement
     private String title;
@@ -270,6 +272,18 @@ public class Movie {
         return director;
     }
 
+    public List<Actor> actors() {
+        return Collections.unmodifiableList(actorList);
+    }
+
+    public void addActor(Actor actor){
+        actorList.add(actor);
+    }
+
+    public void removeActors(){
+        actorList.clear();
+    }
+
     public static class MovieBuilder {
         private String title;
         private String originaltitle;
@@ -416,7 +430,7 @@ public class Movie {
      * Created by lm on 06.12.15.
      */
     @XmlAccessorType(XmlAccessType.FIELD)
-    static class Fileinfo {
+    static class Fileinfo implements Serializable{
 
         @XmlElement
         private String streamdetails="";
@@ -450,7 +464,7 @@ public class Movie {
      */
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    public static class Actor {
+    public static class Actor implements Serializable{
         @XmlElement
         private String name;
         @XmlElement
