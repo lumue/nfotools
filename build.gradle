@@ -18,7 +18,7 @@ targetCompatibility = '1.8'
 
 
 //project properties
-version = '1.0'
+version = '1.0-RELEASE'
 group = 'io.github.lumue'
 
 //dependenciesS
