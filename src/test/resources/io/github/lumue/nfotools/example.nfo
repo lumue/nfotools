@@ -16,33 +16,16 @@
     <mpaa>Not available</mpaa>
     <playcount>0</playcount><!-- setting this to > 0 will mark the movie as watched if the "importwatchedstate" flag is set in advancedsettings.xml -->
     <id>tt0432337</id>
-    <filenameandpath>c:\Dummy_Movie_Files\Movies\...So Goes The Nation.avi</filenameandpath>
+    <filenameandpath>/Dummy_Movie_Files/Movies/So Goes The Nation.avi</filenameandpath>
     <trailer></trailer>
     <genre></genre>
     <credits></credits>
     <fileinfo>
-        <streamdetails> <!-- While it is possible to manually set the information contained within the "streamdetails" tag,there is little point in doing so, as the software will always overwrite this data when it plays back the video file. In other words, no matter how many times you try to manually set it, it will be undone the moment the video is played.-->
-        </streamdetails>
+        <streamdetails />
     </fileinfo>
     <director>Adam Del Deo</director>
     <actor>
         <name>Paul Begala</name>
-        <role>Himself</role>
-    </actor>
-    <actor>
-        <name>George W. Bush</name>
-        <role>Himself</role>
-    </actor>
-    <actor>
-        <name>Mary Beth Cahill</name>
-        <role>Herself</role>
-    </actor>
-    <actor>
-        <name>Ed Gillespie</name>
-        <role>Himself</role>
-    </actor>
-    <actor>
-        <name>John Kerry</name>
         <role>Himself</role>
     </actor>
 </movie>
