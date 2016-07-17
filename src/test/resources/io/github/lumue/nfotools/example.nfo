@@ -1,0 +1,31 @@
+<!-- example nfo file from http://kodi.wiki/view/NFO_files/movies -->
+<movie>
+    <title>Who knows</title>
+    <originaltitle>Who knows for real</originaltitle>
+    <sorttitle>Who knows 1</sorttitle>
+    <set>Who knows trilogy</set>
+    <rating>6.100000</rating>
+    <year>2008</year>
+    <top250>0</top250>
+    <votes>50</votes>
+    <outline>A look at the role of the Buckeye State in the 2004 Presidential Election.</outline>
+    <plot>A look at the role of the Buckeye State in the 2004 Presidential Election.</plot>
+    <tagline></tagline>
+    <runtime>90</runtime> //runtime in minutes
+    <thumb>http://ia.ec.imdb.com/media/imdb/01/I/25/65/31/10f.jpg</thumb>
+    <mpaa>Not available</mpaa>
+    <playcount>0</playcount><!-- setting this to > 0 will mark the movie as watched if the "importwatchedstate" flag is set in advancedsettings.xml -->
+    <id>tt0432337</id>
+    <filenameandpath>/Dummy_Movie_Files/Movies/So Goes The Nation.avi</filenameandpath>
+    <trailer></trailer>
+    <genre></genre>
+    <credits></credits>
+    <fileinfo>
+        <streamdetails />
+    </fileinfo>
+    <director>Adam Del Deo</director>
+    <actor>
+        <name>Paul Begala</name>
+        <role>Himself</role>
+    </actor>
+</movie>

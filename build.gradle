@@ -1,14 +1,45 @@
-group 'io.github.lumue'
-version '1.0-SNAPSHOT'
-
+buildscript {
+	repositories {
+		mavenCentral()
+		maven {
+			url 'https://plugins.gradle.org/m2/'
+		}
+	}
+	dependencies {
+		classpath group: 'com.layer', name: 'gradle-git-repo-plugin', version: '2.0.2'
+		classpath 'net.researchgate:gradle-release:2.3.4'
+	}
+}
 apply plugin: 'java'
 
-sourceCompatibility = 1.5
+//java configuration
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
+
+//project properties
+version = '1.1-SNAPSHOT'
+group = 'io.github.lumue'
+
+//dependenciesS
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+dependencies{
+	testCompile 'junit:junit:4.11'
 }
+
+apply plugin: 'maven'
+
+
+uploadArchives {
+	repositories.mavenDeployer {
+		repository(url: "file:/home/lm/git/maven-repository/")
+	}
+}
+
+
+apply plugin: 'net.researchgate.release'
+
+afterReleaseBuild.dependsOn uploadArchives
