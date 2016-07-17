@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import static org.junit.Assert.*;
 
 /**
- * Created by lm on 07.12.15.
+ * test nfo serialization of a movie entity
  */
 public class NfoMovieSerializerTest {
 
@@ -39,6 +39,8 @@ public class NfoMovieSerializerTest {
                     .withTrailer("")
                     .withGenre("")
                     .withCredits("")
+                    .withTag("tag1")
+                    .withTag("tag2")
                     .withDirector("Adam Del Deo")
                     .addActor(new Movie.Actor("Paul Begala", "Himself"))
                     .build();

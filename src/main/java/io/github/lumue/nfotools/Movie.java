@@ -62,11 +62,13 @@ public class Movie implements Serializable{
     private String director;
     @XmlElement(name="actor")
     private List<Actor> actorList=new ArrayList<>();
+	@XmlElement(name="tag")
+	private List<String> tagList=new ArrayList<>();
 
     Movie() {
     }
 
-    public Movie(String title, String originaltitle, String sorttitle, String set, String rating, String year, String top250, String votes, String outline, String plot, String tagline, String runtime, String thumb, String mpaa, String playcount, String id, String filenameandpath, String trailer, String genre, String credits, Fileinfo fileinfo, String director, List<Actor> actorList) {
+    public Movie(String title, String originaltitle, String sorttitle, String set, String rating, String year, String top250, String votes, String outline, String plot, String tagline, String runtime, String thumb, String mpaa, String playcount, String id, String filenameandpath, String trailer, String genre, String credits, Fileinfo fileinfo, String director, List<Actor> actorList,List<String> tagList) {
         this.title = title;
         this.originaltitle = originaltitle;
         this.sorttitle = sorttitle;
@@ -90,6 +92,7 @@ public class Movie implements Serializable{
         this.fileinfo = fileinfo;
         this.director = director;
         this.actorList = actorList;
+	    this.tagList=tagList;
     }
 
     public static MovieBuilder builder(){
@@ -308,6 +311,7 @@ public class Movie implements Serializable{
         private Fileinfo fileinfo=new Fileinfo();
         private String director;
         private final List<Actor> actorList=new ArrayList<>();
+        private final List<String> tagList=new ArrayList<>();
 
         public MovieBuilder withTitle(String title) {
             this.title = title;
@@ -422,8 +426,13 @@ public class Movie implements Serializable{
         }
 
         public Movie build() {
-            return new Movie(title, originaltitle, sorttitle, set, rating, year, top250, votes, outline, plot, tagline, runtime, thumb, mpaa, playcount, id, filenameandpath, trailer, genre, credits,  fileinfo, director, actorList);
+            return new Movie(title, originaltitle, sorttitle, set, rating, year, top250, votes, outline, plot, tagline, runtime, thumb, mpaa, playcount, id, filenameandpath, trailer, genre, credits,  fileinfo, director, actorList,tagList);
         }
+
+	    public MovieBuilder withTag(String val) {
+	        this.tagList.add(val);
+            return this;
+	    }
     }
 
     /**
