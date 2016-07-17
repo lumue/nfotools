@@ -13,8 +13,5 @@ hs_err_pid*
 .gradle
 .idea
 nfotools.iml
-gradlew
-gradlew.bat
-gradle/
 build
 test_out.nfo
