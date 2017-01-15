@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Created by lm on 06.12.15.
  */
+@SuppressWarnings("unused")
 @XmlRootElement(name = "movie")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Movie implements Serializable{
