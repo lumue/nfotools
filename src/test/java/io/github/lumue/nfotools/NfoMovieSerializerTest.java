@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
 
@@ -43,6 +44,8 @@ public class NfoMovieSerializerTest {
                     .withTag("tag2")
                     .withDirector("Adam Del Deo")
                     .addActor(new Movie.Actor("Paul Begala", "Himself"))
+                    .withDateAdded(LocalDateTime.of(2018,01,01,00,00))
+                    .withAired(LocalDateTime.of(2017,12,01,00,00))
                     .build();
 
     @Test

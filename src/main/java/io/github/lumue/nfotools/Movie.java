@@ -5,6 +5,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -15,6 +17,9 @@ import java.util.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Movie implements Serializable{
 
+	private final static DateTimeFormatter DATE_TIME_FORMATTER=DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss");
+	
+	
     @XmlElement
     private String title;
     @XmlElement
@@ -63,12 +68,16 @@ public class Movie implements Serializable{
     private List<Actor> actorList=new ArrayList<>();
 	@XmlElement(name="tag")
 	private List<String> tagList=new ArrayList<>();
+	@XmlElement
+	String dateadded;
+	@XmlElement
+	String aired;
 
     Movie() {
     }
 
-    public Movie(String title, String originaltitle, String sorttitle, String set, String rating, String year, String top250, String votes, String outline, String plot, String tagline, String runtime, String thumb, String mpaa, String playcount, String id, String filenameandpath, String trailer, String genre, String credits, Fileinfo fileinfo, String director, List<Actor> actorList,Collection<String> tagList) {
-        this.title = title;
+    public Movie(String title, String originaltitle, String sorttitle, String set, String rating, String year, String top250, String votes, String outline, String plot, String tagline, String runtime, String thumb, String mpaa, String playcount, String id, String filenameandpath, String trailer, String genre, String credits, Fileinfo fileinfo, String director,String dateadded,String aired,List<Actor> actorList,Collection<String> tagList) {
+    	this.title = title;
         this.originaltitle = originaltitle;
         this.sorttitle = sorttitle;
         this.set = set;
@@ -92,6 +101,8 @@ public class Movie implements Serializable{
         this.director = director;
         this.actorList = actorList;
 	    this.tagList.addAll(tagList);
+		this.dateadded=dateadded;
+		this.aired=aired;
     }
 
     public static MovieBuilder builder(){
@@ -311,8 +322,10 @@ public class Movie implements Serializable{
         private String director;
         private final List<Actor> actorList=new ArrayList<>();
         private final Set<String> tagList=new HashSet<>();
-
-        public MovieBuilder withTitle(String title) {
+	    private LocalDateTime dateAdded;
+	    private LocalDateTime aired;
+	
+	    public MovieBuilder withTitle(String title) {
             this.title = title;
             return this;
         }
@@ -425,12 +438,32 @@ public class Movie implements Serializable{
         }
 
         public Movie build() {
-            return new Movie(title, originaltitle, sorttitle, set, rating, year, top250, votes, outline, plot, tagline, runtime, thumb, mpaa, playcount, id, filenameandpath, trailer, genre, credits,  fileinfo, director, actorList,tagList);
+	    	String dateAdded=this.dateAdded!=null?this.dateAdded.format(DATE_TIME_FORMATTER) :null;
+	    	String aired=this.aired!=null?this.aired.format(DATE_TIME_FORMATTER):dateAdded;
+            return new Movie(title, originaltitle, sorttitle,
+		            set, rating, year, top250, votes, outline,
+		            plot, tagline, runtime, thumb, mpaa, playcount,
+		            id, filenameandpath, trailer, genre, credits,
+		            fileinfo, director,dateAdded,aired ,actorList,tagList);
         }
 
 	    public MovieBuilder withTag(String val) {
 	        this.tagList.add(val);
             return this;
+	    }
+	
+	    public MovieBuilder withDateAdded(LocalDateTime localDateTime) {
+	        this.dateAdded=localDateTime;
+	        if(this.aired==null)
+	        	this.withAired(localDateTime);
+	        return this;
+        }
+	
+	    public MovieBuilder withAired(LocalDateTime localDateTime) {
+	        this.aired=localDateTime;
+	        if(this.year==null)
+	        	this.withYear(Integer.toString(localDateTime.getYear()));
+	        return this;
 	    }
     }
 
