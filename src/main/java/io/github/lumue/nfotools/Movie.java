@@ -5,9 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by lm on 06.12.15.
@@ -69,7 +67,7 @@ public class Movie implements Serializable{
     Movie() {
     }
 
-    public Movie(String title, String originaltitle, String sorttitle, String set, String rating, String year, String top250, String votes, String outline, String plot, String tagline, String runtime, String thumb, String mpaa, String playcount, String id, String filenameandpath, String trailer, String genre, String credits, Fileinfo fileinfo, String director, List<Actor> actorList,List<String> tagList) {
+    public Movie(String title, String originaltitle, String sorttitle, String set, String rating, String year, String top250, String votes, String outline, String plot, String tagline, String runtime, String thumb, String mpaa, String playcount, String id, String filenameandpath, String trailer, String genre, String credits, Fileinfo fileinfo, String director, List<Actor> actorList,Collection<String> tagList) {
         this.title = title;
         this.originaltitle = originaltitle;
         this.sorttitle = sorttitle;
@@ -93,7 +91,7 @@ public class Movie implements Serializable{
         this.fileinfo = fileinfo;
         this.director = director;
         this.actorList = actorList;
-	    this.tagList=tagList;
+	    this.tagList.addAll(tagList);
     }
 
     public static MovieBuilder builder(){
@@ -312,7 +310,7 @@ public class Movie implements Serializable{
         private Fileinfo fileinfo=new Fileinfo();
         private String director;
         private final List<Actor> actorList=new ArrayList<>();
-        private final List<String> tagList=new ArrayList<>();
+        private final Set<String> tagList=new HashSet<>();
 
         public MovieBuilder withTitle(String title) {
             this.title = title;
