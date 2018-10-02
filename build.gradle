@@ -43,3 +43,7 @@ uploadArchives {
 apply plugin: 'net.researchgate.release'
 
 afterReleaseBuild.dependsOn uploadArchives
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '4.8'
+}
