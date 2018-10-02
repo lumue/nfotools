@@ -59,7 +59,7 @@ public class NfoMovieSerializerTest {
     }
 
     private NfoMovieSerializer createSerializer() throws JAXBException {
-        JAXBContext jaxbContext=JAXBContext.newInstance(Movie.class,Movie.Fileinfo.class,Movie.Actor.class);
+        JAXBContext jaxbContext=JAXBContext.newInstance(Movie.class, Fileinfo.class,Movie.Actor.class);
         return new NfoMovieSerializer(jaxbContext);
     }
 

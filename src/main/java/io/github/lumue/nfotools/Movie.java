@@ -467,40 +467,7 @@ public class Movie implements Serializable{
 	    }
     }
 
-    /**
-     * Created by lm on 06.12.15.
-     */
-    @XmlAccessorType(XmlAccessType.FIELD)
-    static class Fileinfo implements Serializable{
-
-        @XmlElement
-        private String streamdetails="";
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Fileinfo that = (Fileinfo) o;
-
-            return streamdetails != null ? streamdetails.equals(that.streamdetails) : that.streamdetails == null;
-
-        }
-
-        @Override
-        public int hashCode() {
-            return streamdetails != null ? streamdetails.hashCode() : 0;
-        }
-
-        @Override
-        public String toString() {
-            return "Fileinfo{" +
-                    "streamdetails='" + streamdetails + '\'' +
-                    '}';
-        }
-    }
-
-    /**
+/**
      * Created by lm on 06.12.15.
      */
 
