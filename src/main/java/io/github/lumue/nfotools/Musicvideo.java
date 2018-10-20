@@ -148,7 +148,7 @@ public class Musicvideo implements Serializable {
 		builder.fileinfo = copy.getFileinfo();
 		builder.director = copy.getDirector();
 		builder.artist = copy.getArtist();
-		builder.tagList = new HashSet<>(copy.getTagList());
+		copy.getTagList().forEach(builder::addTag);
 		builder.dateadded = copy.getDateadded();
 		builder.aired = copy.getAired();
 		return builder;
