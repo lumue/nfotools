@@ -15,6 +15,14 @@ public class NfoMovieSerializer{
 
     private final JAXBContext jaxbContext;
 
+    public NfoMovieSerializer(){
+        try {
+            jaxbContext= JAXBContext.newInstance(Movie.class, Movie.Actor.class);
+        } catch (JAXBException e) {
+            throw new RuntimeException("failed to instantiate JAXBContext");
+        }
+    }
+
     public NfoMovieSerializer(JAXBContext jaxbContext) {
         this.jaxbContext = Objects.requireNonNull(jaxbContext);
     }
