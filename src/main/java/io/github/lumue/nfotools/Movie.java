@@ -76,7 +76,7 @@ public class Movie implements Serializable{
     Movie() {
     }
 
-    public Movie(String title, String originaltitle, String sorttitle, String set, String rating, String year, String top250, String votes, String outline, String plot, String tagline, String runtime, String thumb, String mpaa, String playcount, String id, String filenameandpath, String trailer, String genre, String credits, Fileinfo fileinfo, String director,String dateadded,String aired,List<Actor> actorList,Collection<String> tagList) {
+    public Movie(String title, String originaltitle, String sorttitle, String set, String rating, String year, String top250, String votes, String outline, String plot, String tagline, String runtime, String thumb, String mpaa, String playcount, String id, String filenameandpath, String trailer, String genre, String credits, Fileinfo fileinfo, String director,String dateadded,String aired,Collection<Actor> actorList,Collection<String> tagList) {
     	this.title = title;
         this.originaltitle = originaltitle;
         this.sorttitle = sorttitle;
@@ -99,7 +99,7 @@ public class Movie implements Serializable{
         this.credits = credits;
         this.fileinfo = fileinfo;
         this.director = director;
-        this.actorList = actorList;
+        this.actorList.addAll(actorList);
         this.tagList.addAll(tagList);
 		    this.dateadded=dateadded;
 		    this.aired=aired;
@@ -303,6 +303,14 @@ public class Movie implements Serializable{
         actorList.clear();
     }
 
+    public String getDateadded() {
+        return dateadded;
+    }
+
+    public String getAired() {
+        return aired;
+    }
+
     public static class MovieBuilder {
         private String title;
         private String originaltitle;
@@ -326,7 +334,7 @@ public class Movie implements Serializable{
         private String credits;
         private Fileinfo fileinfo=new Fileinfo();
         private String director;
-        private final List<Actor> actorList=new ArrayList<>();
+        private final Set<Actor> actorSet =new HashSet<>();
         private final Set<String> tagList=new HashSet<>();
 	      private LocalDateTime dateAdded;
 	      private LocalDateTime aired;
@@ -358,10 +366,12 @@ public class Movie implements Serializable{
         this.credits = movie.credits;
         this.fileinfo = movie.fileinfo;
         this.director = movie.director;
-        this.actorList.addAll(movie.actorList);
+        this.actorSet.addAll(movie.actorList);
         this.tagList.addAll(tagList);
-        this.dateAdded = LocalDateTime.parse(movie.dateadded);
-        this.aired = LocalDateTime.parse(movie.aired);
+        if(movie.dateadded!=null)
+            this.dateAdded = LocalDateTime.parse(movie.dateadded,DATE_TIME_FORMATTER);
+        if(movie.aired!=null)
+            this.aired = LocalDateTime.parse(movie.aired,DATE_TIME_FORMATTER);
       }
 
 	    public MovieBuilder withTitle(String title) {
@@ -472,7 +482,7 @@ public class Movie implements Serializable{
         }
 
         public MovieBuilder addActor(Actor actor) {
-            this.actorList.add(actor);
+            this.actorSet.add(actor);
             return this;
         }
 
@@ -483,7 +493,7 @@ public class Movie implements Serializable{
 		            set, rating, year, top250, votes, outline,
 		            plot, tagline, runtime, thumb, mpaa, playcount,
 		            id, filenameandpath, trailer, genre, credits,
-		            fileinfo, director,dateAdded,aired ,actorList,tagList);
+		            fileinfo, director,dateAdded,aired , actorSet,tagList);
         }
 
 	    public MovieBuilder withTag(String val) {
