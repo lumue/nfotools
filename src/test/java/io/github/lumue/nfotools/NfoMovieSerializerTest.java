@@ -72,4 +72,13 @@ public class NfoMovieSerializerTest {
         assertNotNull("deserialized object should not be null",result);
         assertEquals("deserialized object should equal the testmovie bean",TESTMOVIE,result);
     }
+
+    @Test
+    public void testDeserializeOther() throws Exception {
+        NfoMovieSerializer serializer = createSerializer();
+        InputStream inputStream = NfoMovieSerializerTest.class.getResourceAsStream("realworld_example.nfo");
+        Movie result=serializer.deserialize(inputStream);
+        inputStream.close();
+        assertNotNull("deserialized object should not be null",result);
+    }
 }

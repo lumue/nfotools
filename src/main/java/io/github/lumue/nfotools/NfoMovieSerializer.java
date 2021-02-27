@@ -17,7 +17,7 @@ public class NfoMovieSerializer{
 
     public NfoMovieSerializer(){
         try {
-            jaxbContext= JAXBContext.newInstance(Movie.class, Movie.Actor.class);
+            jaxbContext= JAXBContext.newInstance(Movie.class, Fileinfo.class,Movie.Actor.class);
         } catch (JAXBException e) {
             throw new RuntimeException("failed to instantiate JAXBContext");
         }
