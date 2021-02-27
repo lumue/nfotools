@@ -5,8 +5,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.*;
 
 /**
@@ -17,7 +20,7 @@ import java.util.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Movie implements Serializable{
 
-	private final static DateTimeFormatter DATE_TIME_FORMATTER=DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss");
+	private final static DateTimeFormatter DATE_TIME_FORMATTER=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 
     @XmlElement
@@ -368,10 +371,14 @@ public class Movie implements Serializable{
         this.director = movie.director;
         this.actorSet.addAll(movie.actorList);
         this.tagList.addAll(tagList);
-        if(movie.dateadded!=null)
-            this.dateAdded = LocalDateTime.parse(movie.dateadded,DATE_TIME_FORMATTER);
-        if(movie.aired!=null)
-            this.aired = LocalDateTime.parse(movie.aired,DATE_TIME_FORMATTER);
+        if(movie.dateadded!=null) {
+            String date = movie.dateadded;
+            this.dateAdded = parseDateTime(date);
+        }
+        if(movie.aired!=null) {
+            String aired = movie.aired;
+            this.aired = parseDateTime(aired);
+        }
       }
 
 	    public MovieBuilder withTitle(String title) {
@@ -516,7 +523,18 @@ public class Movie implements Serializable{
 	    }
     }
 
-/**
+
+
+    private static LocalDateTime parseDateTime(String date) {
+        DateTimeFormatter dateTimeFormatter = DATE_TIME_FORMATTER
+                .withLocale(Locale.getDefault())
+                .withZone(TimeZone.getDefault().toZoneId())
+                .withResolverStyle(ResolverStyle.LENIENT);
+        return LocalDateTime.parse(date,dateTimeFormatter);
+
+    }
+
+    /**
      * Created by lm on 06.12.15.
      */
 

@@ -13,4 +13,9 @@ public class MovieBuilderTest {
     public void testBuildEmpty() throws Exception {
         assertEquals(new Movie(), Movie.builder().build());
     }
+
+    @Test
+    public void testCreateCopyBuilder() throws Exception {
+        assertEquals(TestFixtures.TESTMOVIE, TestFixtures.TESTMOVIE.copyBuilder().build());
+    }
 }
