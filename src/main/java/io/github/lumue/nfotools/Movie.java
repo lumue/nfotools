@@ -339,8 +339,8 @@ public class Movie implements Serializable{
         private String director;
         private final Set<Actor> actorSet =new HashSet<>();
         private final Set<String> tagList=new HashSet<>();
-	      private LocalDateTime dateAdded;
-	      private LocalDateTime aired;
+	      private String dateAdded;
+	      private String aired;
 
 	    private MovieBuilder(){
 	        super();
@@ -373,11 +373,11 @@ public class Movie implements Serializable{
         this.tagList.addAll(tagList);
         if(movie.dateadded!=null) {
             String date = movie.dateadded;
-            this.dateAdded = parseDateTime(date);
+            this.dateAdded = date;
         }
         if(movie.aired!=null) {
             String aired = movie.aired;
-            this.aired = parseDateTime(aired);
+            this.aired =aired;
         }
       }
 
@@ -494,8 +494,8 @@ public class Movie implements Serializable{
         }
 
         public Movie build() {
-	    	String dateAdded=this.dateAdded!=null?this.dateAdded.format(DATE_TIME_FORMATTER) :null;
-	    	String aired=this.aired!=null?this.aired.format(DATE_TIME_FORMATTER):dateAdded;
+	    	String dateAdded=this.dateAdded!=null?this.dateAdded:null;
+	    	String aired=this.aired!=null?this.aired:dateAdded;
             return new Movie(title, originaltitle, sorttitle,
 		            set, rating, year, top250, votes, outline,
 		            plot, tagline, runtime, thumb, mpaa, playcount,
@@ -509,14 +509,14 @@ public class Movie implements Serializable{
 	    }
 
 	    public MovieBuilder withDateAdded(LocalDateTime localDateTime) {
-	        this.dateAdded=localDateTime;
-	        if(this.aired==null)
-	        	this.withAired(localDateTime);
+	        this.dateAdded=DATE_TIME_FORMATTER.format(localDateTime);
+	        if(this.dateAdded==null)
+	        	this.withDateAdded(localDateTime);
 	        return this;
         }
 
 	    public MovieBuilder withAired(LocalDateTime localDateTime) {
-	        this.aired=localDateTime;
+	        this.aired=DATE_TIME_FORMATTER.format(localDateTime);
 	        if(this.year==null)
 	        	this.withYear(Integer.toString(localDateTime.getYear()));
 	        return this;
