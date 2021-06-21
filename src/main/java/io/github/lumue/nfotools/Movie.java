@@ -314,6 +314,8 @@ public class Movie implements Serializable{
         return aired;
     }
 
+    public Set<String> tags() { return new HashSet<>(tagList);   }
+
     public static class MovieBuilder {
         private String title;
         private String originaltitle;
@@ -494,8 +496,8 @@ public class Movie implements Serializable{
         }
 
         public Movie build() {
-	    	String dateAdded=this.dateAdded!=null?this.dateAdded:null;
-	    	String aired=this.aired!=null?this.aired:dateAdded;
+	    	this.aired=this.aired!=null?this.aired:dateAdded;
+            this.year=this.year!=null?this.year: parseYear(aired);
             return new Movie(title, originaltitle, sorttitle,
 		            set, rating, year, top250, votes, outline,
 		            plot, tagline, runtime, thumb, mpaa, playcount,
@@ -503,27 +505,37 @@ public class Movie implements Serializable{
 		            fileinfo, director,dateAdded,aired , actorSet,tagList);
         }
 
-	    public MovieBuilder withTag(String val) {
+        public MovieBuilder withTag(String val) {
 	        this.tagList.add(val);
             return this;
 	    }
 
 	    public MovieBuilder withDateAdded(LocalDateTime localDateTime) {
 	        this.dateAdded=DATE_TIME_FORMATTER.format(localDateTime);
-	        if(this.dateAdded==null)
-	        	this.withDateAdded(localDateTime);
 	        return this;
         }
 
 	    public MovieBuilder withAired(LocalDateTime localDateTime) {
 	        this.aired=DATE_TIME_FORMATTER.format(localDateTime);
-	        if(this.year==null)
-	        	this.withYear(Integer.toString(localDateTime.getYear()));
 	        return this;
 	    }
+
     }
 
 
+    /**
+     * Created by lm on 06.12.15.
+     */
+
+    private static String parseYear(String aired) {
+        try {
+            String s = Integer.toString(parseDateTime(aired).getYear());
+            return s;
+        }
+        catch(RuntimeException e){
+            return null;
+        }
+    }
 
     private static LocalDateTime parseDateTime(String date) {
         DateTimeFormatter dateTimeFormatter = DATE_TIME_FORMATTER
@@ -533,13 +545,9 @@ public class Movie implements Serializable{
         return LocalDateTime.parse(date,dateTimeFormatter);
 
     }
-
-    /**
-     * Created by lm on 06.12.15.
-     */
-
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Actor implements Serializable{
+
         @XmlElement
         private String name;
         @XmlElement
