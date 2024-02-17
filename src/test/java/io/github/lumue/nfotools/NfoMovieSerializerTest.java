@@ -49,6 +49,7 @@ public class NfoMovieSerializerTest {
         Movie result=serializer.deserialize(inputStream);
         inputStream.close();
         assertNotNull("deserialized object should not be null",result);
-        //result.copyBuilder();
+        assertEquals("1",result.getUserrating());
+        assertEquals("2015-08-11 22:39:07",result.getLastplayed());
     }
 }
