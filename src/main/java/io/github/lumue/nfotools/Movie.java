@@ -18,10 +18,9 @@ import java.util.*;
 @SuppressWarnings("unused")
 @XmlRootElement(name = "movie")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Movie implements Serializable{
+public class Movie implements Serializable {
 
-	private final static DateTimeFormatter DATE_TIME_FORMATTER=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
+    private final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @XmlElement
     private String title;
@@ -29,6 +28,8 @@ public class Movie implements Serializable{
     private String originaltitle;
     @XmlElement
     private String sorttitle;
+    @XmlElement
+    private String userrating;
     @XmlElement
     private String set;
     @XmlElement
@@ -54,6 +55,8 @@ public class Movie implements Serializable{
     @XmlElement
     private String playcount;
     @XmlElement
+    private String lastplayed;
+    @XmlElement
     private String id;
     @XmlElement
     private String filenameandpath;
@@ -64,23 +67,51 @@ public class Movie implements Serializable{
     @XmlElement
     private String credits;
     @XmlElement
-    private Fileinfo fileinfo=new Fileinfo();
+    private Fileinfo fileinfo = new Fileinfo();
     @XmlElement
     private String director;
-    @XmlElement(name="actor")
-    private List<Actor> actorList=new ArrayList<>();
-	@XmlElement(name="tag")
-	private List<String> tagList=new ArrayList<>();
-	@XmlElement
-	String dateadded;
-	@XmlElement
-	String aired;
+    @XmlElement(name = "actor")
+    private List<Actor> actorList = new ArrayList<>();
+    @XmlElement(name = "tag")
+    private List<String> tagList = new ArrayList<>();
+    @XmlElement
+    String dateadded;
+    @XmlElement
+    String aired;
+
 
     Movie() {
     }
 
-    public Movie(String title, String originaltitle, String sorttitle, String set, String rating, String year, String top250, String votes, String outline, String plot, String tagline, String runtime, String thumb, String mpaa, String playcount, String id, String filenameandpath, String trailer, String genre, String credits, Fileinfo fileinfo, String director,String dateadded,String aired,Collection<Actor> actorList,Collection<String> tagList) {
-    	this.title = title;
+    public Movie(String title,
+                 String originaltitle,
+                 String sorttitle,
+                 String set,
+                 String rating,
+                 String year,
+                 String top250,
+                 String votes,
+                 String outline,
+                 String plot,
+                 String tagline,
+                 String runtime,
+                 String thumb,
+                 String mpaa,
+                 String playcount,
+                 String id,
+                 String filenameandpath,
+                 String trailer,
+                 String genre,
+                 String credits,
+                 Fileinfo fileinfo,
+                 String director,
+                 String dateadded,
+                 String aired,
+                 String userrating,
+                 String lastplayed,
+                 Collection<Actor> actorList,
+                 Collection<String> tagList) {
+        this.title = title;
         this.originaltitle = originaltitle;
         this.sorttitle = sorttitle;
         this.set = set;
@@ -104,19 +135,24 @@ public class Movie implements Serializable{
         this.director = director;
         this.actorList.addAll(actorList);
         this.tagList.addAll(tagList);
-		    this.dateadded=dateadded;
-		    this.aired=aired;
+        this.dateadded = dateadded;
+        this.aired = aired;
+        this.userrating=userrating;
+        this.lastplayed=lastplayed;
     }
 
 
-
-    public static MovieBuilder builder(){
+    public static MovieBuilder builder() {
         return new MovieBuilder();
-    };
+    }
 
-    public MovieBuilder copyBuilder(){
+    ;
+
+    public MovieBuilder copyBuilder() {
         return new MovieBuilder(this);
-    };
+    }
+
+    ;
 
     @Override
     public boolean equals(Object o) {
@@ -298,11 +334,11 @@ public class Movie implements Serializable{
         return Collections.unmodifiableList(actorList);
     }
 
-    public void addActor(Actor actor){
+    public void addActor(Actor actor) {
         actorList.add(actor);
     }
 
-    public void removeActors(){
+    public void removeActors() {
         actorList.clear();
     }
 
@@ -313,6 +349,15 @@ public class Movie implements Serializable{
     public String getAired() {
         return aired;
     }
+
+    public String getUserrating() {
+        return userrating;
+    }
+
+    public String getLastplayed() {
+        return lastplayed;
+    }
+
 
     public static class MovieBuilder {
         private String title;
@@ -335,54 +380,68 @@ public class Movie implements Serializable{
         private String trailer;
         private String genre;
         private String credits;
-        private Fileinfo fileinfo=new Fileinfo();
+        private Fileinfo fileinfo = new Fileinfo();
         private String director;
-        private final Set<Actor> actorSet =new HashSet<>();
-        private final Set<String> tagList=new HashSet<>();
-	      private String dateAdded;
-	      private String aired;
+        private final Set<Actor> actorSet = new HashSet<>();
+        private final Set<String> tagList = new HashSet<>();
+        private String dateAdded;
+        private String aired;
+        private String userrating;
+        private String lastplayed;
 
-	    private MovieBuilder(){
-	        super();
-      }
-
-      private MovieBuilder(Movie movie){
-        this.title = movie.title;
-        this.originaltitle = movie.originaltitle;
-        this.sorttitle = movie.sorttitle;
-        this.set = movie.set;
-        this.rating = movie.rating;
-        this.year = movie.year;
-        this.top250 = movie.top250;
-        this.votes = movie.votes;
-        this.outline = movie.outline;
-        this.plot = movie.plot;
-        this.tagline = movie.tagline;
-        this.runtime = movie.runtime;
-        this.thumb = movie.thumb;
-        this.mpaa = movie.mpaa;
-        this.playcount = movie.playcount;
-        this.id = movie.id;
-        this.filenameandpath = movie.filenameandpath;
-        this.trailer = movie.trailer;
-        this.genre = movie.genre;
-        this.credits = movie.credits;
-        this.fileinfo = movie.fileinfo;
-        this.director = movie.director;
-        this.actorSet.addAll(movie.actorList);
-        this.tagList.addAll(tagList);
-        if(movie.dateadded!=null) {
-            String date = movie.dateadded;
-            this.dateAdded = date;
+        private MovieBuilder() {
+            super();
         }
-        if(movie.aired!=null) {
-            String aired = movie.aired;
-            this.aired =aired;
-        }
-      }
 
-	    public MovieBuilder withTitle(String title) {
+        private MovieBuilder(Movie movie) {
+            this.title = movie.title;
+            this.originaltitle = movie.originaltitle;
+            this.sorttitle = movie.sorttitle;
+            this.set = movie.set;
+            this.rating = movie.rating;
+            this.year = movie.year;
+            this.top250 = movie.top250;
+            this.votes = movie.votes;
+            this.outline = movie.outline;
+            this.plot = movie.plot;
+            this.tagline = movie.tagline;
+            this.runtime = movie.runtime;
+            this.thumb = movie.thumb;
+            this.mpaa = movie.mpaa;
+            this.playcount = movie.playcount;
+            this.id = movie.id;
+            this.filenameandpath = movie.filenameandpath;
+            this.trailer = movie.trailer;
+            this.genre = movie.genre;
+            this.credits = movie.credits;
+            this.fileinfo = movie.fileinfo;
+            this.director = movie.director;
+            this.actorSet.addAll(movie.actorList);
+            this.tagList.addAll(tagList);
+            if (movie.dateadded != null) {
+                String date = movie.dateadded;
+                this.dateAdded = date;
+            }
+            if (movie.aired != null) {
+                String aired = movie.aired;
+                this.aired = aired;
+            }
+            this.userrating=movie.userrating;
+            this.lastplayed=movie.lastplayed;
+        }
+
+        public MovieBuilder withTitle(String title) {
             this.title = title;
+            return this;
+        }
+
+        public MovieBuilder withLastplayed(String lastplayed) {
+            this.lastplayed = lastplayed;
+            return this;
+        }
+
+        public MovieBuilder withUserrating(String userrating){
+            this.userrating=userrating;
             return this;
         }
 
@@ -482,7 +541,6 @@ public class Movie implements Serializable{
         }
 
 
-
         public MovieBuilder withDirector(String director) {
             this.director = director;
             return this;
@@ -494,35 +552,34 @@ public class Movie implements Serializable{
         }
 
         public Movie build() {
-	    	String dateAdded=this.dateAdded!=null?this.dateAdded:null;
-	    	String aired=this.aired!=null?this.aired:dateAdded;
+            String dateAdded = this.dateAdded != null ? this.dateAdded : null;
+            String aired = this.aired != null ? this.aired : dateAdded;
             return new Movie(title, originaltitle, sorttitle,
-		            set, rating, year, top250, votes, outline,
-		            plot, tagline, runtime, thumb, mpaa, playcount,
-		            id, filenameandpath, trailer, genre, credits,
-		            fileinfo, director,dateAdded,aired , actorSet,tagList);
+                    set, rating, year, top250, votes, outline,
+                    plot, tagline, runtime, thumb, mpaa, playcount,
+                    id, filenameandpath, trailer, genre, credits,
+                    fileinfo, director, dateAdded,aired,userrating,lastplayed , actorSet, tagList);
         }
 
-	    public MovieBuilder withTag(String val) {
-	        this.tagList.add(val);
+        public MovieBuilder withTag(String val) {
+            this.tagList.add(val);
             return this;
-	    }
-
-	    public MovieBuilder withDateAdded(LocalDateTime localDateTime) {
-	        this.dateAdded=DATE_TIME_FORMATTER.format(localDateTime);
-	        if(this.dateAdded==null)
-	        	this.withDateAdded(localDateTime);
-	        return this;
         }
 
-	    public MovieBuilder withAired(LocalDateTime localDateTime) {
-	        this.aired=DATE_TIME_FORMATTER.format(localDateTime);
-	        if(this.year==null)
-	        	this.withYear(Integer.toString(localDateTime.getYear()));
-	        return this;
-	    }
-    }
+        public MovieBuilder withDateAdded(LocalDateTime localDateTime) {
+            this.dateAdded = DATE_TIME_FORMATTER.format(localDateTime);
+            if (this.dateAdded == null)
+                this.withDateAdded(localDateTime);
+            return this;
+        }
 
+        public MovieBuilder withAired(LocalDateTime localDateTime) {
+            this.aired = DATE_TIME_FORMATTER.format(localDateTime);
+            if (this.year == null)
+                this.withYear(Integer.toString(localDateTime.getYear()));
+            return this;
+        }
+    }
 
 
     private static LocalDateTime parseDateTime(String date) {
@@ -530,7 +587,7 @@ public class Movie implements Serializable{
                 .withLocale(Locale.getDefault())
                 .withZone(TimeZone.getDefault().toZoneId())
                 .withResolverStyle(ResolverStyle.LENIENT);
-        return LocalDateTime.parse(date,dateTimeFormatter);
+        return LocalDateTime.parse(date, dateTimeFormatter);
 
     }
 
@@ -539,7 +596,7 @@ public class Movie implements Serializable{
      */
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    public static class Actor implements Serializable{
+    public static class Actor implements Serializable {
         @XmlElement
         private String name;
         @XmlElement
